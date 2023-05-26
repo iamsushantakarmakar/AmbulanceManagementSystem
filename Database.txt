@@ -1,0 +1,296 @@
+admin - 
+CREATE TABLE tbladmin (
+  id int NOT NULL,
+  uname varchar(100) NOT NULL,
+  upass varchar(100) DEFAULT NULL,
+  email varchar(100) DEFAULT NULL,
+added_on timestamp DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+);
+
+CREATE SEQUENCE admin_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER admin_bir 
+BEFORE INSERT ON tbladmin 
+FOR EACH ROW
+BEGIN
+  SELECT admin_seq.NEXTVAL
+  INTO   :new.id
+  FROM   dual;
+END;
+/
+
+
+
+
+ambulance -
+CREATE TABLE tblambulance (
+  id int NOT NULL,
+  ambulance_vehicle_no varchar(100) DEFAULT NULL,
+  ambulance_type varchar(45) DEFAULT NULL,
+  driver_lincense_no varchar(100) DEFAULT NULL,
+  driver_name varchar(100) DEFAULT NULL,
+  driver_mobile varchar(100) DEFAULT NULL,
+  state varchar(100) DEFAULT NULL,
+  city varchar(100) DEFAULT NULL,
+  status varchar(45) DEFAULT NULL,
+booking_status varchar2(50),
+driver_id int,
+  created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp  DEFAULT CURRENT_TIMESTAMP,
+  license_image BLOB,
+  PRIMARY KEY (id)
+);
+
+CREATE SEQUENCE ambulance_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER ambulance_bir 
+BEFORE INSERT ON tblambulance
+FOR EACH ROW
+BEGIN
+  SELECT ambulance_seq.NEXTVAL
+  INTO   :new.id
+  FROM   dual;
+END;
+/
+
+
+
+
+
+captha -
+CREATE TABLE tblcaptcha (
+  captcha varchar(100) DEFAULT NULL
+);
+
+
+
+
+
+contact - 
+CREATE TABLE tblcontact (
+  contact_id int NOT NULL,
+  name varchar(200) DEFAULT NULL,
+  email varchar(100) DEFAULT NULL,
+  mobile varchar(100) DEFAULT NULL,
+  message varchar(500) DEFAULT NULL,
+  created_at timestamp  DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (contact_id)
+);
+
+CREATE SEQUENCE contact_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER contact_bir 
+BEFORE INSERT ON tblcontact
+FOR EACH ROW
+BEGIN
+  SELECT contact_seq.NEXTVAL
+  INTO   :new.contact_id
+  FROM   dual;
+END;
+/
+
+
+
+
+
+driver - 
+CREATE TABLE tbldriver (
+  driver_id varchar(100) NOT NULL,
+  driver_name varchar(200) DEFAULT NULL,
+  driver_email varchar(100) DEFAULT NULL,
+  driver_mobile varchar(100) DEFAULT NULL,
+  driver_address varchar(100) DEFAULT NULL,
+  uname varchar(100) DEFAULT NULL,
+  upass varchar(100) DEFAULT NULL,
+  created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp  DEFAULT CURRENT_TIMESTAMP,
+driver_image blob,
+  PRIMARY KEY (driver_id)
+);
+
+CREATE SEQUENCE driver_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER driver_bir 
+BEFORE INSERT ON tbldriver
+FOR EACH ROW
+BEGIN
+  SELECT driver_seq.NEXTVAL
+  INTO   :new.driver_id
+  FROM   dual;
+END;
+/
+
+
+
+
+feedback - 
+
+CREATE TABLE tblfeedback (
+  id int NOT NULL,
+  patient_id varchar(100) DEFAULT NULL,
+  patient_name varchar(100) DEFAULT NULL,
+  patient_mobile varchar(100) DEFAULT NULL,
+  avn varchar(100) DEFAULT NULL,
+  driverName varchar(100) DEFAULT NULL,
+  feedback_complaint_type varchar(100) DEFAULT NULL,
+  feedback_or_complaint varchar(500) DEFAULT NULL,
+  created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+);
+
+CREATE SEQUENCE feedback_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER feedback_bir 
+BEFORE INSERT ON tblfeedback
+FOR EACH ROW
+BEGIN
+  SELECT feedback_seq.NEXTVAL
+  INTO   :new.id
+  FROM   dual;
+END;
+/
+
+
+
+
+
+patient - 
+CREATE TABLE tblpatient (
+  patient_id varchar(100) NOT NULL,
+  patient_name varchar(200) DEFAULT NULL,
+  patient_email varchar(100) DEFAULT NULL,
+  Patient_mobile varchar(100) DEFAULT NULL,
+  patient_address varchar(100) DEFAULT NULL,
+  uname varchar(100) DEFAULT NULL,
+  upass varchar(100) DEFAULT NULL,
+  created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp DEFAULT CURRENT_TIMESTAMP,
+  patient_gender varchar(10),
+  patient_image blob, 
+  PRIMARY KEY (patient_id)
+);
+
+
+CREATE SEQUENCE patient_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER patient_bir 
+BEFORE INSERT ON tblfeedback
+FOR EACH ROW
+BEGIN
+  SELECT feedback_seq.NEXTVAL
+  INTO   :new.id
+  FROM   dual;
+END;
+/
+
+
+
+AMBULANCE BOOKING-
+create table tblambulancebooking (
+id int not null, 
+patient_id varchar2(100),
+patient_disease varchar2(100), 
+source_address varchar2(100), 
+destination_address varchar2(100), 
+pickup_time varchar2(100), 
+driver_name varchar2(100), 
+driver_license varchar2(100), 
+amount float, 
+driver_amount float, 
+admin_amount float,
+status varchar2(50),
+avn varchar2(50),
+distance int,
+created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+updated_at timestamp  DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+);
+
+
+CREATE SEQUENCE ambulancebooking_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER ambulancebooking_bir 
+BEFORE INSERT ON tblambulancebooking
+FOR EACH ROW
+BEGIN
+  SELECT ambulancebooking_seq.NEXTVAL
+  INTO   :new.id
+  FROM   dual;
+END;
+/
+
+
+
+
+
+
+
+------Drop Sequences------
+drop sequence admin_seq;
+drop sequence ambulance_seq;
+drop sequence contact_seq;
+drop sequence driver_seq;
+drop sequence feedback_seq;
+drop sequence patient_seq;
+drop sequence ambulancebooking_seq;
+
+
+
+
+drop trigger admin_bir;
+drop trigger ambulance_bir;
+drop trigger contact_bir;
+drop trigger driver_bir;
+drop trigger feedback_bir;
+drop trigger patient_bir;
+drop trigger ambulancebooking_bir;
+
+
+
+
+
+
+
+
+create table tblambulancebooking (
+id int not null, 
+patient_id varchar2(100),
+patient_disease varchar2(100), 
+source_address varchar2(100), 
+destination_address varchar2(100), 
+pickup_time varchar2(100), 
+driver_name varchar2(100), 
+driver_license varchar2(100), 
+amount float, 
+driver_amount float, 
+admin_amount float,
+status varchar2(50),
+avn varchar2(50),
+distance int,
+created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+updated_at timestamp  DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+);
+
+
+
+tblambulancebooking 
+
+alter table tblambulancebooking add status varchar2(50);
+alter table tblambulancebooking add avn varchar2(50);
+alter table tblambulancebooking add distance int;
+alter table tblambulancebooking add created_at timestamp DEFAULT CURRENT_TIMESTAMP;
+alter table tblambulancebooking add updated_at timestamp  DEFAULT CURRENT_TIMESTAMP;
+alter table tblambulancebooking add PRIMARY KEY (ID);
+
+
+
+
+
+
+
+
+
+
